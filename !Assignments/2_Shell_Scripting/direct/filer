@@ -1,0 +1,58 @@
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.1  24300 15460 ?        Ss   05:35   0:02 /sbin/init
+root           2  0.0  0.0   3180  2204 hvc0     Sl+  05:35   0:00 /init
+root           7  0.0  0.0   3180  2040 hvc0     Sl+  05:35   0:00 plan9 --control-socket 7 --log-level 4 --server-fd 8 --pipe-fd 10 --log-truncate
+root          47  0.0  0.2  50648 17476 ?        S<s  05:35   0:01 /usr/lib/systemd/systemd-journald
+systemd+      69  0.0  0.1  22416 14456 ?        Ss   05:35   0:00 /usr/lib/systemd/systemd-resolved
+root          95  0.0  0.1  35276 12444 ?        Ss   05:35   0:09 /usr/lib/systemd/systemd-udevd
+root         153  0.0  0.0   2888  1948 ?        Ss   05:35   0:00 /bin/sh /usr/lib/systemd/scripts/chronyd-starter.sh -n -F 1
+root         157  0.0  0.0   4472  3080 ?        Ss   05:35   0:00 /usr/sbin/cron -f -P
+message+     161  0.0  0.0   8820  5376 ?        Ss   05:35   0:00 @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+root         175  0.0  0.3  44096 29684 ?        Ss   05:35   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+root         182  0.0  0.1  18440  9476 ?        Ss   05:35   0:00 /usr/lib/systemd/systemd-logind
+syslog       201  0.0  0.0 220548  5920 ?        Ssl  05:35   0:00 /usr/sbin/rsyslogd -n -iNONE
+_chrony      251  0.0  0.0  20424  6284 ?        S    05:35   0:00 /usr/sbin/chronyd -n -F 1 -x
+root         265  0.0  0.0   5492  2756 tty1     Ss+  05:35   0:00 /usr/sbin/agetty --noreset --noclear --issue-file=/etc/issue:/etc/issue.d:/run/issue.d:/usr/lib/issue.d - linux
+_chrony      268  0.0  0.0  12096  2448 ?        S    05:35   0:00 /usr/sbin/chronyd -n -F 1 -x
+root         270  0.0  0.4 123460 32588 ?        Ssl  05:35   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+root         433  0.0  0.0   8652  5488 ?        Ss   05:35   0:00 login -- r44gh4v
+r44gh4v      476  0.0  0.1  22344 13604 ?        Ss   05:35   0:00 /usr/lib/systemd/systemd --user
+r44gh4v      478  0.0  0.0  22920  4088 ?        S    05:35   0:00 (sd-pam)
+r44gh4v      505  0.0  0.0   6136  5436 pts/1    Ss+  05:35   0:00 -bash
+root       15710  0.0  0.0   3196  1120 ?        Ss   06:59   0:00 /init
+root       15711  0.0  0.0   3196  1192 ?        S    06:59   0:00 /init
+r44gh4v    15712  0.0  0.0   2888  1936 pts/0    Ss+  06:59   0:00 sh -c "$VSCODE_WSL_EXT_LOCATION/scripts/wslServer.sh" a44adf7f53e00964ab890f9f8758a334f1fc15bc stable code-server .vscode-server --host=127.0.0.1 --port=0 --connection-token=2142621720-661412103-2024271806-1189908809 --use-host-proxy --without-browser-env-var --disable-websocket-compression --accept-server-license-terms --disable-telemetry --telemetry-level=off
+r44gh4v    15713  0.0  0.0   2888  1948 pts/0    S+   06:59   0:00 sh /mnt/c/Users/r44gh4v/.vscode/extensions/ms-vscode-remote.remote-wsl-0.104.3/scripts/wslServer.sh a44adf7f53e00964ab890f9f8758a334f1fc15bc stable code-server .vscode-server --host=127.0.0.1 --port=0 --connection-token=2142621720-661412103-2024271806-1189908809 --use-host-proxy --without-browser-env-var --disable-websocket-compression --accept-server-license-terms --disable-telemetry --telemetry-level=off
+r44gh4v    15719  0.0  0.0   2888  1944 pts/0    S+   06:59   0:00 sh /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/bin/code-server --host=127.0.0.1 --port=0 --connection-token=2142621720-661412103-2024271806-1189908809 --use-host-proxy --without-browser-env-var --disable-websocket-compression --accept-server-license-terms --disable-telemetry --telemetry-level=off
+r44gh4v    15723  0.2  1.7 1770588 133540 pts/0  Sl+  06:59   0:38 /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/node /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/out/server-main.js --host=127.0.0.1 --port=0 --connection-token=2142621720-661412103-2024271806-1189908809 --use-host-proxy --without-browser-env-var --disable-websocket-compression --accept-server-license-terms --disable-telemetry --telemetry-level=off
+r44gh4v    15799  0.0  1.7 18539348 134176 pts/0 Sl+  06:59   0:12 /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/node /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/out/bootstrap-fork --type=agentHost --logsPath /home/r44gh4v/.vscode-server/data/logs/20260905T210246 --user-data-dir /home/r44gh4v/.vscode-server/data --telemetry-level off
+r44gh4v    15863  0.0  3.3 11526108 256396 pts/0 Sl+  06:59   0:09 /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/node /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/node_modules/@github/copilot-linux-x64/index.js --headless --no-auto-update --log-level info --stdio --no-auto-login
+r44gh4v    15870  0.0  0.9 1541032 76392 pts/0   Sl+  06:59   0:11 /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/node /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/out/bootstrap-fork --type=ptyHost --logsPath /home/r44gh4v/.vscode-server/data/logs/20260905T210246
+polkitd    35736  0.0  0.1 306444  8552 ?        Ssl  09:47   0:00 /usr/lib/polkit-1/polkitd --no-debug --log-level=notice
+root       35998  0.0  0.0   3188  1120 ?        Ss   09:48   0:00 /init
+root       35999  0.0  0.0   3204  1196 ?        S    09:48   0:00 /init
+r44gh4v    36000  0.0  0.9 1421464 70004 pts/2   Ssl+ 09:48   0:00 /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/node -e const net = require('net'); process.stdin.pause(); const client = net.createConnection({ host: '127.0.0.1', port: 33439 }, () => { client.pipe(process.stdout); process.stdin.pipe(client); }); client.on('close', function (hadError) { console.error(hadError ? 'Remote close with error' : 'Remote close'); process.exit(hadError ? 1 : 0); }); client.on('error', function (err) { process.stderr.write(err && (err.stack || err.message) || String(err)); });
+root       36008  0.0  0.0   3188  1120 ?        Ss   09:48   0:00 /init
+root       36009  0.0  0.0   3204  1200 ?        S    09:48   0:00 /init
+r44gh4v    36012  0.0  0.7 1411788 61740 pts/3   Ssl+ 09:48   0:00 /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/node -e const net = require('net'); process.stdin.pause(); const client = net.createConnection({ host: '127.0.0.1', port: 33439 }, () => { client.pipe(process.stdout); process.stdin.pipe(client); }); client.on('close', function (hadError) { console.error(hadError ? 'Remote close with error' : 'Remote close'); process.exit(hadError ? 1 : 0); }); client.on('error', function (err) { process.stderr.write(err && (err.stack || err.message) || String(err)); });
+r44gh4v    36022  0.0  0.7 1530292 59284 pts/0   Sl+  09:48   0:01 /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/node /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/out/bootstrap-fork --type=fileWatcher
+r44gh4v    36035  2.7  8.6 20320976 670460 pts/0 Sl+  09:48   2:37 /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/node --dns-result-order=ipv4first /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/out/bootstrap-fork --type=extensionHost --transformURIs --useHostProxy=true
+root       36090  0.0  0.0   3188  1120 ?        Ss   09:48   0:00 /init
+root       36091  0.0  0.0   3204  1196 ?        S    09:48   0:00 /init
+r44gh4v    36092  0.0  0.0   2888  1936 pts/4    Ss+  09:48   0:00 /bin/sh -c cd '/mnt/d/Coding/!DevOps/sst-devops' && /bin/sh
+r44gh4v    36096  0.0  0.0   2888  1932 pts/4    S+   09:48   0:00 /bin/sh
+r44gh4v    36109  0.0  0.6 1410600 53676 pts/4   Sl+  09:48   0:00 /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/node /home/r44gh4v/.vscode-remote-containers/dist/vscode-remote-containers-server-0.466.0.js
+r44gh4v    36189  0.0  0.0   2888  1948 pts/4    S+   09:48   0:00 /bin/sh
+r44gh4v    50944  0.0  0.8 1490932 63016 pts/0   Sl+  11:12   0:00 /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/node /home/r44gh4v/.vscode-server/extensions/ms-azuretools.vscode-containers-2.5.0/dist/dockerfile-language-server-nodejs/lib/server.js --node-ipc --node-ipc --clientProcessId=36035
+r44gh4v    50945  0.0  0.8 1421336 62364 pts/0   Sl+  11:12   0:00 /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/node /home/r44gh4v/.vscode-server/extensions/ms-azuretools.vscode-containers-2.5.0/dist/compose-language-service/lib/server.js --node-ipc --node-ipc --clientProcessId=36035
+r44gh4v    50961  0.0  0.4 1256760 31332 pts/0   Sl+  11:12   0:00 /home/r44gh4v/.vscode-server/extensions/docker.docker-0.18.0-linux-x64/bin/docker-language-server-linux-amd64 start --stdio
+r44gh4v    50978  0.0  0.3 1257272 29464 pts/0   Sl+  11:12   0:00 /home/r44gh4v/.vscode-server/extensions/docker.docker-0.18.0-linux-x64/bin/docker-language-server-linux-amd64 start --stdio
+r44gh4v    51028  0.2  1.5 1641128 122280 pts/0  Sl+  11:12   0:01 /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/node /home/r44gh4v/.vscode-server/extensions/redhat.vscode-yaml-1.24.0/dist/languageserver.js --node-ipc --clientProcessId=36035
+r44gh4v    51499  0.0  0.9 1502980 75176 pts/0   Sl+  11:15   0:00 /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/node /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/extensions/markdown-language-features/dist/serverWorkerMain --node-ipc --clientProcessId=36035
+root       52000  0.0  0.1 1792300 15228 ?       Ssl  11:17   0:00 /usr/libexec/wsl-pro-service
+r44gh4v    52784  0.1  0.0   6396  5844 pts/5    Ss   11:22   0:00 /bin/bash --init-file /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/out/vs/workbench/contrib/terminal/common/scripts/shellIntegration-bash.sh
+r44gh4v    52846  0.0  0.0   4952  3636 pts/5    S+   11:22   0:00 bash script.sh
+r44gh4v    52969  0.0  0.0   2888  1932 pts/0    S+   11:22   0:00 /bin/sh -c "/home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/out/vs/base/node/cpuUsage.sh" 52784 52846
+r44gh4v    52970  0.0  0.0   4948  3712 pts/0    S+   11:22   0:00 /bin/bash /home/r44gh4v/.vscode-server/bin/a44adf7f53e00964ab890f9f8758a334f1fc15bc/out/vs/base/node/cpuUsage.sh 52784 52846
+r44gh4v    52974  0.0  0.0  16112  7624 pts/0    S+   11:22   0:00 sleep 1
+r44gh4v    52983  0.0  0.0   7296  4448 pts/5    R+   11:22   0:00 ps aux
