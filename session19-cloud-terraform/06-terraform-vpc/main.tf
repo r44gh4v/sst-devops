@@ -1,4 +1,4 @@
-resource "aws_vpc" "main" {
+resource "aws_vpc" "main-haha" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_support   = true
   enable_dns_hostnames = true
@@ -10,8 +10,8 @@ resource "aws_vpc" "main" {
   }
 }
 
-resource "aws_subnet" "public" {
-  vpc_id                  = aws_vpc.main.id
+resource "aws_subnet" "public-haha" {
+  vpc_id                  = aws_vpc.main-haha.id
   cidr_block              = "10.0.1.0/24"
   availability_zone       = "${var.aws_region}a"
   map_public_ip_on_launch = true
@@ -23,8 +23,8 @@ resource "aws_subnet" "public" {
   }
 }
 
-resource "aws_internet_gateway" "main" {
-  vpc_id = aws_vpc.main.id
+resource "aws_internet_gateway" "main-haha" {
+  vpc_id = aws_vpc.main-haha.id
 
   tags = {
     Name      = "session19-igw"
@@ -33,12 +33,12 @@ resource "aws_internet_gateway" "main" {
   }
 }
 
-resource "aws_route_table" "public" {
-  vpc_id = aws_vpc.main.id
+resource "aws_route_table" "public-haha" {
+  vpc_id = aws_vpc.main-haha.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id  = aws_internet_gateway.main.id
+    gateway_id = aws_internet_gateway.main-haha.id
   }
 
   tags = {
@@ -48,15 +48,15 @@ resource "aws_route_table" "public" {
   }
 }
 
-resource "aws_route_table_association" "public" {
-  subnet_id      = aws_subnet.public.id
-  route_table_id = aws_route_table.public.id
+resource "aws_route_table_association" "public-haha" {
+  subnet_id      = aws_subnet.public-haha.id
+  route_table_id = aws_route_table.public-haha.id
 }
 
-resource "aws_security_group" "web" {
+resource "aws_security_group" "web-haha" {
   name        = "session19-web-sg"
   description = "Security group for Session 19 web traffic"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = aws_vpc.main-haha.id
 
   ingress {
     description = "HTTP"
