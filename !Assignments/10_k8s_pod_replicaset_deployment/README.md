@@ -16,6 +16,25 @@
 
 ![](3.png)
 
+All 12 files in `pod-lifecycle/` applied at once, then `kubectl get pods`. What each one showed:
+
+| Pod | STATUS | What I observed |
+| :-- | :-- | :-- |
+| lifecycle-running | Running 1/1 | Container started and stayed up - the normal state. |
+| lifecycle-pending | Pending 0/1 | Requests more CPU/memory than the node has, so the scheduler cannot place it. `describe` shows the `FailedScheduling` event. |
+| lifecycle-succeeded | Completed 0/1 | Container ran its command and exited with code 0. Pod phase is `Succeeded`, it is not restarted. |
+| lifecycle-failed | Error 0/1 | Container exited with non-zero code and `restartPolicy: Never`. Pod phase is `Failed`. |
+| lifecycle-crashloop | Error, restarts 3 | Container keeps crashing and kubelet keeps restarting it. After a few tries the status becomes `CrashLoopBackOff` as the restart delay grows. |
+| lifecycle-image-error | ErrImagePull | Image does not exist, so the pull fails. It then turns into `ImagePullBackOff`. |
+| lifecycle-init | Running 1/1 | Init container had to finish first, then the main container started. |
+| lifecycle-readiness | Running 1/1 | Readiness probe decides if the pod gets traffic from a Service. |
+| lifecycle-liveness | Running 1/1 | Liveness probe - if it fails, kubelet restarts the container. |
+| lifecycle-startup | Running 1/1 | Startup probe gives a slow app time before liveness starts checking. |
+| lifecycle-multi-container | Running 2/2 | Two containers in one pod, share network and start together. |
+| lifecycle-termination | Running 1/1 | Shows graceful shutdown - on delete the container gets SIGTERM and a grace period before SIGKILL. |
+
+Official pod phases are only `Pending`, `Running`, `Succeeded`, `Failed`, `Unknown`. `Completed`, `Error`, `CrashLoopBackOff` and `ImagePullBackOff` are just what `kubectl get pods` shows from the container state.
+
 ## 4. ReplicaSet, StatefulSet & DaemonSet
 
 ![](4a.png)

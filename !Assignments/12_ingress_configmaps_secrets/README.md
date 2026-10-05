@@ -103,3 +103,21 @@ The value is never written in the file. It is kept in AWS Secrets Manager, Azure
 ### Rotation
 
 The vault can generate a new password every month, update the stored value automatically, and the application keeps using the same secret name. Same for TLS certificates, which expire every few months.
+
+### Why Secrets should not be committed to Git
+
+- Secret values in YAML are only **base64 encoded**, not encrypted - `echo <value> | base64 -d` reveals them instantly.
+- Git keeps history. Even if the file is deleted later, the password stays in old commits and in every clone and fork.
+- Anyone with read access to the repo gets production credentials.
+- A leaked secret has to be rotated, and public repos are scanned by bots within minutes.
+
+Instead: keep real values outside the repo (vault / CI variables), add secret files to `.gitignore`, and commit only a template with placeholder values.
+
+## 9. Troubleshooting - Secret Password Rejected
+
+**Problem:** the app's password is rejected although the Secret looks right.
+**Commands:** `kubectl get secret db-secret -o jsonpath='{.data.password}' | base64 -d | xxd`
+**Root cause:** encoded with `echo` instead of `echo -n`, so a newline was stored with the password.
+**Fix:** re-encode with `echo -n`, re-apply the Secret, restart the pod.
+
+Before / after - the `echo` vs `echo -n` screenshot in section 2 (`2b.png`).
