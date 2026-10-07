@@ -1,0 +1,10 @@
+groups:
+  - name: application-health
+    rules:
+      - alert: TargetDown
+        expr: up == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Target {{ $labels.job }} is down"
