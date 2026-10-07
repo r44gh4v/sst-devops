@@ -1,4 +1,4 @@
-# Assignment 21 - Final DevOps Project & Troubleshooting
+# Assignment 21 - Run the TaskBoard DevSecOps Project
 
 Session 21 homework: run the class TaskBoard project end to end - manually, with Docker, with Docker Compose - test the application and its backend APIs, and run the CI/CD pipeline.
 
