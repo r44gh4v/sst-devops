@@ -1,0 +1,174 @@
+name: 17 - DevSecOps Pipeline
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '17-devsecops/**'
+      - '.github/workflows/17-devsecops.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - '17-devsecops/**'
+      - '.github/workflows/17-devsecops.yml'
+  workflow_dispatch:
+
+env:
+  IMAGE: ghcr.io/${{ github.repository_owner }}/hey-cicd
+
+defaults:
+  run:
+    working-directory: 17-devsecops
+
+jobs:
+  # 1-2. Build + unit test
+  test:
+    name: Build and Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements-dev.txt
+      - run: pytest --cov=app --cov-report=term-missing
+
+  # 3. SAST - static analysis of our own source code
+  sast:
+    name: SAST - CodeQL
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: python
+          config-file: ./17-devsecops/security/codeql-config.yml
+      - uses: github/codeql-action/analyze@v3
+
+  # 4. SCA - known vulnerabilities in dependencies
+  sca:
+    name: SCA - pip-audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: |
+          pip install -r requirements.txt pip-audit
+          pip-audit -r requirements.txt
+
+  # 5. Secret scanning - credentials committed to the repo or its history
+  secret-scan:
+    name: Secret Scan - Gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # full history, not just the last commit
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_CONFIG: 17-devsecops/security/gitleaks.toml
+
+  # 6. Docker build (only after the code-level checks pass)
+  docker-build:
+    name: Docker Build
+    needs: [test, sast, sca, secret-scan]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t $IMAGE:${{ github.sha }} .
+      - run: docker save $IMAGE:${{ github.sha }} -o $GITHUB_WORKSPACE/image.tar
+      - uses: actions/upload-artifact@v4
+        with:
+          name: image
+          path: image.tar
+
+  # 7. Container image scan - OS packages and libraries inside the image
+  image-scan:
+    name: Image Scan - Trivy
+    needs: docker-build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: image
+      - run: docker load -i $GITHUB_WORKSPACE/image.tar
+      - name: Trivy scan (fails on fixable HIGH / CRITICAL)
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 $IMAGE:${{ github.sha }}
+
+  # 8. Security gate - one explicit decision point
+  security-gate:
+    name: Security Gate
+    needs: [test, sast, sca, secret-scan, image-scan]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - run: echo "All quality and security checks passed. Release allowed."
+
+  # 9. Push image (only if the gate passed, only on main)
+  push:
+    name: Push Image to GHCR
+    needs: security-gate
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: image
+      - run: docker load -i $GITHUB_WORKSPACE/image.tar
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - run: |
+          docker tag $IMAGE:${{ github.sha }} $IMAGE:latest
+          docker push $IMAGE:${{ github.sha }}
+          docker push $IMAGE:latest
+
+  # 10. Deploy to Kubernetes (a throw-away kind cluster inside the runner)
+  deploy:
+    name: Deploy to Kubernetes
+    needs: push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: image
+      - run: docker load -i $GITHUB_WORKSPACE/image.tar
+      - uses: helm/kind-action@v1
+        with:
+          cluster_name: kind
+      - name: Load the scanned image into the cluster
+        run: kind load docker-image $IMAGE:${{ github.sha }}
+      - name: Point manifest at the new image
+        run: |
+          sed -i "s|__OWNER__|${{ github.repository_owner }}|; s|__IMAGE_TAG__|${{ github.sha }}|; s|imagePullPolicy: Always|imagePullPolicy: IfNotPresent|" k8s/deployment.yaml
+      - name: Deploy
+        run: |
+          kubectl apply -f k8s/deployment.yaml -f k8s/service.yaml
+          kubectl rollout status deployment/session17-python --timeout=90s
+      - name: Smoke test
+        run: |
+          kubectl port-forward service/session17-python 5001:80 &
+          sleep 3
+          curl -sf http://localhost:5001/health
+          curl -sf http://localhost:5001/api/status

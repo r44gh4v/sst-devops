@@ -1,0 +1,12 @@
+# Gitleaks configuration: default rules plus an allowlist for test fixtures.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Fake values used in tests and docs"
+paths = [
+  '''tests/.*''',
+]
+regexes = [
+  '''replace-with-test-value''',
+]
