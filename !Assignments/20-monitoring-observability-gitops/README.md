@@ -2,7 +2,8 @@
 
 ## 1. Prometheus - Metrics & Application Health
 
-![](1.png)
+![](1a.png)
+![](1b.png)
 
 ## 2. Grafana - CPU & Memory Utilization
 
@@ -14,15 +15,20 @@
 
 ## 4. Logs
 
-![](4.png)
+![](4a.png)
+![](4b.png)
 
 ## 5. GitOps - Argo CD Application Synced
 
-![](5.png)
+![](5a.png)
+![](5b.png)
+![](5c.png)
+![](5d.png)
 
 ## 6. GitOps - Change in Git Synced to the Cluster
 
-![](6.png)
+![](6a.png)
+![](6b.png)
 
 ## 7. GitOps - Manual Change Reverted (Self-Heal)
 
