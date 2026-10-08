@@ -6,7 +6,9 @@ Project repo (fork of the class repo): [r44gh4v/sst-devops-devsecops-python](htt
 
 ## 1. Run Manually - Database & Backend
 
-![](1.png)
+![](1a.png)
+![](1b.png)
+![](1c.png)
 
 ## 2. Run Manually - Frontend
 
@@ -18,15 +20,18 @@ Project repo (fork of the class repo): [r44gh4v/sst-devops-devsecops-python](htt
 
 ## 4. Docker - Build & Run Images
 
-![](4.png)
+![](4a.png)
+![](4b.png)
 
 ## 5. Docker Compose
 
-![](5.png)
+![](5a.png)
+![](5b.png)
 
 ## 6. Application UI
 
-![](6.png)
+![](6a.png)
+![](6b.png)
 
 ## 7. Backend API - /docs
 
@@ -42,7 +47,8 @@ Project repo (fork of the class repo): [r44gh4v/sst-devops-devsecops-python](htt
 
 ## 10. CI/CD Pipeline
 
-![](10.png)
+![](10a.png)
+![](10b.png)
 
 ## 11. Project Overview
 
